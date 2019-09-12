@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
             uiThread {
                 Log.i("mko", titleList.toString())
+
+                //val stringList = mutableListOf<String>()
+                //titleList.items.forEach { item -> stringList.add(item.url)}
+
                 dataList.adapter = DataListAdapter(titleList)
             }
         }

@@ -2,6 +2,7 @@ package com.example.techchallenge.request
 
 import com.example.techchallenge.data.DataResult
 import com.example.techchallenge.mapper.DataMapper
+import com.example.techchallenge.model.ModelResult
 import com.google.gson.Gson
 import java.net.URL
 
@@ -11,7 +12,7 @@ class RequestData {
         private const val CHALLENGE_DATA_URL = "https://bbc.github.io/sport-app-dev-tech-challenge/data.json"
     }
 
-    fun execute() : MutableList<String> {
+    fun execute() : ModelResult {
         val forecastJsonStr = URL(CHALLENGE_DATA_URL).readText()
         val dataResult = Gson().fromJson(forecastJsonStr, DataResult::class.java)
         return DataMapper().convertFromDataToModel(dataResult)

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TechChallenge</string>
+    <string name="time_image">Clock Icon</string>
+    <string name="article_image">Article Image</string>
 </resources>
