@@ -8,7 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.techchallenge.R
+import com.example.techchallenge.adapter.DataListAdapter
+import com.example.techchallenge.request.RequestData
+import kotlinx.android.synthetic.main.fragment_my_sport.*
+import kotlinx.android.synthetic.main.fragment_my_sport.view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MySportFragment : Fragment() {
 
@@ -26,6 +33,19 @@ class MySportFragment : Fragment() {
         mySportViewModel.text.observe(this, Observer {
             textView.text = it
         })
+
+        root.articleList.layoutManager = LinearLayoutManager(context)
+
+        doAsync {
+            val titleList = RequestData().execute()
+
+            uiThread {
+
+                articleList.adapter = DataListAdapter(titleList)
+            }
+        }
+
+
         return root
     }
 }

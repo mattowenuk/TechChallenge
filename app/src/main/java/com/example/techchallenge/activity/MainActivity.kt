@@ -21,19 +21,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        dataList.layoutManager = LinearLayoutManager(this)
+//        dataList.layoutManager = LinearLayoutManager(this)
+//        doAsync {
+//            val titleList = RequestData().execute()
+//            uiThread {
+//                dataList.adapter = DataListAdapter(titleList)
+//            }
+//        }
 
         doAsync {
-            val titleList = RequestData().execute()
-
-            uiThread {
-
-                dataList.adapter = DataListAdapter(titleList)
-            }
+            Thread.sleep(2000)
+            uiThread { startActivity<NavigationActivity>() }
         }
-    }
 
-    fun onContinue(view: View) {
-        startActivity<NavigationActivity>()
     }
 }
