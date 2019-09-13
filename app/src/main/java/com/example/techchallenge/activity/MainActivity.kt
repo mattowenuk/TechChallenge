@@ -3,6 +3,7 @@ package com.example.techchallenge.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.techchallenge.R
 import com.example.techchallenge.adapter.DataListAdapter
@@ -30,5 +31,9 @@ class MainActivity : AppCompatActivity() {
                 dataList.adapter = DataListAdapter(titleList)
             }
         }
+    }
+
+    fun onContinue(view: View) {
+        startActivity<NavigationActivity>()
     }
 }

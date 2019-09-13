@@ -2,4 +2,12 @@
     <string name="app_name">TechChallenge</string>
     <string name="time_image">Clock Icon</string>
     <string name="article_image">Article Image</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="bbc_logo">BBC logo</string>
+    <string name="menu_top">Menu</string>
+    <string name="my_sport">My Sport</string>
+    <string name="guide">Guide</string>
+    <string name="all_sport">All Sport</string>
+    <string name="next_icon">Next icon</string>
 </resources>
