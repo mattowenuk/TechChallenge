@@ -28,11 +28,14 @@ class MainActivity : AppCompatActivity() {
 //                dataList.adapter = DataListAdapter(titleList)
 //            }
 //        }
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         doAsync {
             Thread.sleep(2000)
             uiThread { startActivity<NavigationActivity>() }
         }
-
     }
 }

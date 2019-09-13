@@ -1,6 +1,7 @@
 package com.example.techchallenge.activity.ui.mysport
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.techchallenge.R
+import com.example.techchallenge.activity.ui.article.ArticleFragment
 import com.example.techchallenge.adapter.DataListAdapter
 import com.example.techchallenge.request.RequestData
+import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.fragment_my_sport.*
 import kotlinx.android.synthetic.main.fragment_my_sport.view.*
 import org.jetbrains.anko.doAsync
@@ -41,10 +44,20 @@ class MySportFragment : Fragment() {
 
             uiThread {
 
-                articleList.adapter = DataListAdapter(titleList)
+                articleList.adapter = DataListAdapter(titleList) {
+                    Log.i("mko", it.title)
+
+                    //replace fragment with webView fragment
+
+                    if (savedInstanceState == null) {
+                        fragmentManager?.beginTransaction()
+                            ?.replace(R.id.nav_host_fragment, ArticleFragment.newInstance(it.url), "article")
+                            ?.commit()
+                    }
+
+                }
             }
         }
-
 
         return root
     }
