@@ -30,12 +30,21 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
+    var firstTime = true
+
     override fun onResume() {
         super.onResume()
 
-        doAsync {
-            Thread.sleep(2000)
-            uiThread { startActivity<NavigationActivity>() }
+        if(firstTime) {
+            doAsync {
+                Thread.sleep(2000)
+                uiThread {
+                    startActivity<NavigationActivity>()
+                    firstTime = false
+                }
+            }
+        } else {
+            finish()
         }
     }
 }

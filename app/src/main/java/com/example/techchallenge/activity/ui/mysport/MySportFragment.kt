@@ -50,8 +50,10 @@ class MySportFragment : Fragment() {
                     //replace fragment with webView fragment
 
                     if (savedInstanceState == null) {
+                        val fragment = ArticleFragment.newInstance(it.url)
                         fragmentManager?.beginTransaction()
-                            ?.replace(R.id.nav_host_fragment, ArticleFragment.newInstance(it.url), "article")
+                            ?.replace(R.id.nav_host_fragment, fragment, fragment.javaClass.simpleName)
+                            ?.addToBackStack(fragment.javaClass.simpleName)
                             ?.commit()
                     }
 
