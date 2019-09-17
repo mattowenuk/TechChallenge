@@ -10,4 +10,9 @@
     <string name="guide">Guide</string>
     <string name="all_sport">All Sport</string>
     <string name="next_icon">Next icon</string>
+    <string name="stat_event">event</string>
+    <string name="stat_data">data</string>
+    <string name="stat_error">error</string>
+    <string name="endpoint_url">https://bbc.github.io/sport-app-dev-tech-challenge/stats</string>
+    <string name="json_media_type">application/json; charset=utf-8</string>
 </resources>

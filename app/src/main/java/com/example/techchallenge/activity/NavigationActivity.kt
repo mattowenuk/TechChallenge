@@ -15,6 +15,8 @@ import com.example.techchallenge.activity.ui.article.ArticleFragment
 import com.example.techchallenge.activity.ui.guide.GuideFragment
 import com.example.techchallenge.activity.ui.home.HomeFragment
 import com.example.techchallenge.activity.ui.mysport.MySportFragment
+import com.example.techchallenge.request.PostEvent
+import com.example.techchallenge.request.RequestPostStat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NavigationActivity : AppCompatActivity() {
@@ -51,6 +53,10 @@ class NavigationActivity : AppCompatActivity() {
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navView.setOnNavigationItemReselectedListener {  }
+
+        //send stat to endpoint
+        Log.i("mko", "Loaded with ${fragment.javaClass.simpleName}")
+        RequestPostStat(this, PostEvent.DISPLAY).post()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
@@ -65,19 +71,30 @@ class NavigationActivity : AppCompatActivity() {
             .replace(R.id.nav_host_fragment, fragment, fragment.javaClass.simpleName)
             .addToBackStack(fragment.javaClass.simpleName)
             .commit()
+
+        //send stat to endpoint
+        Log.i("mko", "Replace with ${fragment.javaClass.simpleName}")
+        RequestPostStat(this, PostEvent.DISPLAY).post()
+
         return@OnNavigationItemSelectedListener true
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
 
-        when(supportFragmentManager.fragments[0].tag) {
+        val tag = supportFragmentManager.fragments[0].tag
+
+        when (tag) {
             HomeFragment().javaClass.simpleName -> navView.menu.findItem(R.id.navigation_home).isChecked = true
             MySportFragment().javaClass.simpleName,
-                ArticleFragment().javaClass.simpleName -> navView.menu.findItem(R.id.navigation_my_sport).isChecked = true
+            ArticleFragment().javaClass.simpleName -> navView.menu.findItem(R.id.navigation_my_sport).isChecked = true
             GuideFragment().javaClass.simpleName -> navView.menu.findItem(R.id.navigation_guide).isChecked = true
             AllSportFragment().javaClass.simpleName -> navView.menu.findItem(R.id.navigation_all_sport).isChecked = true
         }
+
+        //send stat to endpoint
+        Log.i("mko", "Back to $tag")
+        RequestPostStat(this, PostEvent.DISPLAY).post()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
