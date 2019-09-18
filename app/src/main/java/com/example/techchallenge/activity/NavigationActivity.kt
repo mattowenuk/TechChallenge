@@ -22,9 +22,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class NavigationActivity : AppCompatActivity() {
 
     lateinit var navView: BottomNavigationView
+    private var savedState: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedState = savedInstanceState
         setContentView(R.layout.activity_navigation)
         navView = findViewById(R.id.nav_view)
 
@@ -32,6 +34,7 @@ class NavigationActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar_action_bar))
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        //setting bottom navigation
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -43,38 +46,54 @@ class NavigationActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        supportFragmentManager.fragments.forEach {
-            supportFragmentManager.beginTransaction().remove(it).commit()
-        }
-        val fragment = HomeFragment()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, fragment, fragment.javaClass.simpleName)
-            .commit()
+        //override the default fragment creation to setup custom transactions
+        initialiseHomeFragment()
 
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navView.setOnNavigationItemReselectedListener {  }
+        //create a listener for the bottom navigation
+        navView.setOnNavigationItemSelectedListener(mOnNavItemClickListener)
 
-        //send stat to endpoint
-        Log.i("mko", "Loaded with ${fragment.javaClass.simpleName}")
-        RequestPostStat(this, PostEvent.DISPLAY).post()
+        //disable the reSelecting/reloading of the tabs
+        navView.setOnNavigationItemReselectedListener {}
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-        var fragment = Fragment()
-        when (menuItem.itemId) {
-            R.id.navigation_home -> fragment = HomeFragment()
-            R.id.navigation_my_sport -> fragment = MySportFragment()
-            R.id.navigation_guide -> fragment = GuideFragment()
-            R.id.navigation_all_sport -> fragment = AllSportFragment()
-        }
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment, fragment.javaClass.simpleName)
-            .addToBackStack(fragment.javaClass.simpleName)
-            .commit()
+    private fun initialiseHomeFragment() {
+        if (savedState == null) {
+            //remove the default loaded fragment
+            supportFragmentManager.fragments.forEach {
+                supportFragmentManager.beginTransaction().remove(it).commit()
+            }
 
-        //send stat to endpoint
-        Log.i("mko", "Replace with ${fragment.javaClass.simpleName}")
-        RequestPostStat(this, PostEvent.DISPLAY).post()
+            //add the Home fragment manually
+            val fragment = HomeFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.nav_host_fragment, fragment, fragment.javaClass.simpleName)
+                .commit()
+
+            //send stat to endpoint
+            Log.i("mko", "Loaded with ${fragment.javaClass.simpleName}")
+            RequestPostStat(this, PostEvent.DISPLAY).post()
+        }
+    }
+
+    private val mOnNavItemClickListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+        //replace with the correct new fragment
+        var newFragment = Fragment()
+        when (menuItem.itemId) {
+            R.id.navigation_home -> newFragment = HomeFragment()
+            R.id.navigation_my_sport -> newFragment = MySportFragment()
+            R.id.navigation_guide -> newFragment = GuideFragment()
+            R.id.navigation_all_sport -> newFragment = AllSportFragment()
+        }
+        if (savedState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, newFragment, newFragment.javaClass.simpleName)
+                .addToBackStack(newFragment.javaClass.simpleName)
+                .commit()
+
+            //send stat to endpoint
+            Log.i("mko", "Replace with ${newFragment.javaClass.simpleName}")
+            RequestPostStat(this, PostEvent.DISPLAY).post()
+        }
 
         return@OnNavigationItemSelectedListener true
     }
@@ -82,6 +101,7 @@ class NavigationActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
 
+        //get tag from newly displayed fragment and set the bottom navigation selection correctly
         val tag = supportFragmentManager.fragments[0].tag
 
         when (tag) {

@@ -25,14 +25,18 @@ class DataListAdapter(private val modelItems: ModelResult,
 
     override fun getItemCount() = modelItems.items.size
 
+    //class accepts the listener lambda
     class ViewHolder(override val containerView: View, private val itemClick: (Item) -> Unit) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
+        //binds the item data to the ui elements
         fun bindModelResult(item: Item) {
             with(item) {
                 containerView.titleTextView.text = title
                 containerView.timeTextView.text = lastUpdatedText
+                //picasso used for the image loading/caching
                 Picasso.with(itemView.context).load(image.small).into(containerView.smallImageView)
                 containerView.smallImageView.contentDescription = image.altText
+                //sets the listener to the view
                 itemView.setOnClickListener { itemClick(this) }
             }
         }

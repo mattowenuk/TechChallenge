@@ -20,17 +20,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        dataList.layoutManager = LinearLayoutManager(this)
-//        doAsync {
-//            val titleList = RequestData().execute()
-//            uiThread {
-//                dataList.adapter = DataListAdapter(titleList)
-//            }
-//        }
     }
 
-    var firstTime = true
+    //splash activity on first time only
+    private var firstTime = true
 
     override fun onResume() {
         super.onResume()

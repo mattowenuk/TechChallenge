@@ -1,5 +1,6 @@
 package com.example.techchallenge.data
 
+//matches the raw json data
 data class DataResult(val data: Data)
 
 data class Data(val topic: Topic, val items: List<Item>)
