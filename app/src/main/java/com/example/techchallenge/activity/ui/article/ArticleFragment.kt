@@ -24,7 +24,7 @@ class ArticleFragment : Fragment() {
         fun newInstance(url: String) =
             ArticleFragment().apply {
                 arguments = Bundle().apply {
-                    putString(getString(R.string.url), url) }
+                    putString("url", url) }
             }
     }
 
@@ -32,7 +32,7 @@ class ArticleFragment : Fragment() {
         super.onAttach(context)
 
         //when the fragment is attached the url is retrieved from the arguments and stored as a property
-        arguments?.getString(getString(R.string.url))?.let {
+        arguments?.getString("url")?.let {
             articleUrl = it
         }
     }

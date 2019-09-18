@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NavigationActivity : AppCompatActivity() {
 
-    lateinit var navView: BottomNavigationView
+    private lateinit var navView: BottomNavigationView
     private var savedState: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

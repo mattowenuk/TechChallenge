@@ -7,23 +7,21 @@ import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 import java.util.*
-import kotlin.collections.HashMap
-import kotlin.concurrent.timer
 
 class RequestPostStat(private val context: Context, private val postEvent: PostEvent) {
 
     //OkHttp used to post stats
     private val client = OkHttpClient()
     
-    fun post(message: String = context.getString(R.string.stat_error)) : String {
+    fun post(message: String? = null) : String {
 
         //post time is stored
         val time = Date().time.toString()
 
-        //error posts use the optional parameter, else the time is used
-        val data = when(postEvent) {
-            PostEvent.ERROR -> message
-            else -> time
+        //optional parameter used if present, else the time is used
+        val data = when(message) {
+            null -> time
+            else -> message
         }
 
         //the url is built with the query parameters
@@ -34,8 +32,7 @@ class RequestPostStat(private val context: Context, private val postEvent: PostE
 
         //build the post body using gson to convert a map to json containing event and data
         val mediaType = MediaType.parse(context.getString(R.string.json_media_type))
-        val map: HashMap<String, String> = 
-            hashMapOf(context.getString(R.string.stat_event) to postEvent.event, context.getString(R.string.stat_data) to data)
+        val map: HashMap<String, String> = hashMapOf(context.getString(R.string.stat_event) to postEvent.event, context.getString(R.string.stat_data) to data)
         val body = Gson().toJson(map)
         val requestBody = RequestBody.create(mediaType, body)
 
