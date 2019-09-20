@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww14620\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Tech Challenge Demonstration\
+\
+1.	Manifest\
+	INTERNET permission\
+\
+2.	MainActivity\
+	Layout designed as a splash activity\
+	Boolean used so on first run a 2 second sleep occurs on background thread\
+	Before starting the navigation activity\
+\
+3.	NavigationActivity\
+	\
+		styles -	No action bar so a custom toolbar can be implemented\
+				Light status bar provides dark icon colours\
+\
+	Set the custom toolbar with no title\
+\
+		activity_navigation - 	Toolbar has BBC logo within an ImageView\
+						Toolbar colour set to colorPrimaryDark\
+\
+		colors - 	colorPrimaryDark is the default colour of the status bar so is set to yellow\
+				And colorPrimary is now the darker colour\
+\
+	Bottom navigation controller template code\
+	Within this the mobile_navigation xml is used\
+\
+		mobile_navigation -	This sets the fragments associated with the bottom navigation\
+						The id, class and layout are set\
+\
+	Overrides the fragment transactions defined above.\
+	Remove and replace with new Home fragment with correct tag set\
+	Stat is posted\
+\
+		RequestPostStat -	Context used to get string resources\
+						OkHttp client used\
+						PostEvent enum and optional parameter used\
+						To allow expansion later\
+						Request is built from query url and post body and called asynchronously\
+\
+	A navigation click listener reacts to menu choices\
+	Controls fragment transactions, including adding to the back stack\
+	Back clicks are consumed than the current fragment tag is used to select the correct item in the menu\
+\
+4.	MySportFragment\
+\
+	doAsync extension function requests the data from the data url\
+	\
+		RequestData -	Converts string url into URL and uses ANKO readText function to return a son string of data\
+					A data class (DataResult) is used to store the data when converted from json using Gson function\
+					\
+					DataResult - 	Classes match the raw data within the data url\
+\
+					This data is mapped to model data classes using DataMapper class\
+\
+					DataMapper -	Selects the required data from the full DataResult classes\
+								Produces a ModelResult object of model data classes\
+\
+					ModelResult - 	This is the data required to display the article list and store url for full article webView					\
+	The error check posts an error stat using the returned exception\
+	Valid data is loaded into the recyclerView using DataListAdapter\
+\
+		DataListAdapter -	Creates a view holder, binds the data to ui elements in item_model\
+						ViewHolder class accepts the click listener lambda and sets this to the item view\
+						Picasso is used to load and cache the image\
+\
+	Another error stat is posted if the model data is null\
+	The item click listener for the recyclerView is defined\
+	Replaces the fragment with an ArticleFragment\
+\
+		ArticleFragment -	Uses a newInstance object to put an url as a string in the arguments bundle\
+						When attached this url is retrieved from the arguments and stored as a property\
+						The fragment layout contains a full screen webView where the stored url is loaded\
+						The webView events are used to post stats, log the duration of the loading and post error stats\
+\
+5.	bottom_navigation_selector	Drawable xml file to set a default and selected colours for the bottom navigation icons and text\
+\
+\
+\
+\
+\
+\
+	}

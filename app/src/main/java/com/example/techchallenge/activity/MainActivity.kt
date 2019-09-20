@@ -3,6 +3,7 @@ package com.example.techchallenge.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.techchallenge.R
 import com.example.techchallenge.adapter.DataListAdapter
@@ -19,16 +20,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
 
-        dataList.layoutManager = LinearLayoutManager(this)
+    //splash activity on first time only
+    private var firstTime = true
 
-        doAsync {
-            val titleList = RequestData().execute()
+    override fun onResume() {
+        super.onResume()
 
-            uiThread {
-                Log.i("mko", titleList.toString())
-                dataList.adapter = DataListAdapter(titleList)
+        if(firstTime) {
+            doAsync {
+                Thread.sleep(2000)
+                uiThread {
+                    startActivity<NavigationActivity>()
+                    firstTime = false
+                }
             }
+        } else {
+            finish()
         }
     }
 }

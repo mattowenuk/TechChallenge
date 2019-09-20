@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_my_sport"
+        android:icon="@drawable/ic_mybbc_mysport"
+        android:title="@string/my_sport" />
+
+    <item
+        android:id="@+id/navigation_guide"
+        android:icon="@drawable/ic_live_scores"
+        android:title="@string/guide" />
+
+    <item
+        android:id="@+id/navigation_all_sport"
+        android:icon="@drawable/ic_list_thumb"
+        android:title="@string/all_sport" />
+
+</menu>
