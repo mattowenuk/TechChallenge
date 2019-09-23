@@ -15,6 +15,8 @@
     <string name="stat_error">error</string>
     <string name="endpoint_url">https://bbc.github.io/sport-app-dev-tech-challenge/stats</string>
     <string name="json_media_type">application/json; charset=utf-8</string>
-    <string name="data_url">https://bbc.github.io/sport-app-dev-tech-challenge/data.json</string>
     <string name="url">url</string>
+    <string name="data_url_1">https://bbc.github.io/sport-app-dev-tech-challenge/data.json</string>
+    <string name="data_url_2">https://api.myjson.com/bins/gufg1</string>
+    <string name="data_url_3">https://api.myjson.com/bins/u03wx</string>
 </resources>
