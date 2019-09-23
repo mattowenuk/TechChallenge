@@ -1,0 +1,123 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red225\green179\blue88;\red32\green32\blue32;\red133\green96\blue154;
+\red172\green172\blue172;\red88\green118\blue71;\red153\green168\blue186;\red191\green100\blue38;\red109\green109\blue109;
+\red86\green132\blue173;}
+{\*\expandedcolortbl;;\csgenericrgb\c88235\c70196\c34510;\csgenericrgb\c12549\c12549\c12549;\csgenericrgb\c52157\c37647\c60392;
+\csgenericrgb\c67451\c67451\c67451;\csgenericrgb\c34510\c46275\c27843;\csgenericrgb\c60000\c65882\c72941;\csgenericrgb\c74902\c39216\c14902;\csgenericrgb\c42745\c42745\c42745;
+\csgenericrgb\c33725\c51765\c67843;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12160\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Bottom Navigation\
+\
+activity_main\
+Item background to primary dark\
+Item text and icon tint to bottom_navigation_selector\
+\
+bottom_navigation_selector\
+Created in drawable folder\
+Set selected colour\
+Last colour will be the default (unselected)\
+\
+bottom_nav_menu\
+Create new text strings in strings.xml\
+Set titles to new strings\
+Refactor id\'92s\
+\'97Icons will be selected here too\'97\
+\
+fragment_dashboard & fragment_notifications\
+refactor id\'92s\
+Rename files\
+\
+mobile_navigation.xml\
+Change labels to new strings\
+\
+ViewModel.kt\
+Change value string and refactor class/file\
+Fragment.kt\
+Refactor Class/file name and private variable\
+Refactor fragment packages\
+\
+ADD another tab\
+\
+bottom_nav_menu.xml\
+Add an other item\
+\
+MainActivity\
+Add new menu item id to setOf()\
+\
+Mobile navigation.xml\
+Add new fragment with new id title and name(with package and fragment name)\
+Create new package\
+\
+Add new ViewModel class with new string value\
+Add new Fragment class\
+This will inflate a new layout\
+And finds new textView id in layout:\
+Create new layout: fragment_new.xml\
+\
+ADD new vector asset\
+\
+Custom tool bar\
+Change style to no action bar\
+Add toolbar to activity_main.xml\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf2 \cb3 <androidx.appcompat.widget.Toolbar\
+    \cf4 android\cf5 :id\cf6 ="@+id/toolbar_action_bar"\
+    \cf4 android\cf5 :layout_width\cf6 ="match_parent"\
+    \cf4 android\cf5 :layout_height\cf6 ="wrap_content"\
+    \cf4 android\cf5 :background\cf6 ="?attr/colorPrimary"\
+    \cf4 android\cf5 :minHeight\cf6 ="?attr/actionBarSize"\
+    \cf4 android\cf5 :theme\cf6 ="?attr/actionBarTheme"\
+    \cf4 app\cf5 :layout_constraintEnd_toEndOf\cf6 ="parent"\
+    \cf4 app\cf5 :layout_constraintStart_toStartOf\cf6 ="parent"\
+    \cf4 app\cf5 :layout_constraintTop_toTopOf\cf6 ="parent"\
+    \cf4 app\cf5 :logo\cf6 ="@mipmap/ic_launcher" \cf2 />\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 \
+To remove the title\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f2\i \cf4 \cb3 supportActionBar
+\f1\i0 \cf7 ?.setDisplayShowTitleEnabled(\cf8 false\cf7 )\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 \
+To centre the logo remove the logo value from the block above\
+And place an image view within the block with a centre gravity value\
+\
+Status bar defaults to primaryDark, so switching the colours and changing within activity_main sorts this.\
+However, the icons in the status are still white be default:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf2 \cb3 <item \cf5 name\cf6 ="android:windowLightStatusBar"\cf2 >\cf7 \cb3 true\cf2 \cb3 </item>\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf9 \cb3 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 Added to style sorts this but minimum SDK 23!!\
+\
+Set to minimum 23:\
+Updating dependencies to newest version in app/gradle produces error where:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf7 \cb3 compileOptions \{\
+    \cf4 \cb3 sourceCompatibility \cf7 \cb3 = \cf10 \cb3 1.8\
+    \cf4 \cb3 targetCompatibility \cf7 \cb3 = \cf10 \cb3 1.8\
+\cf7 \cb3 \}\
+\
+kotlinOptions \{\
+    jvmTarget = \cf6 \cb3 "1.8"\
+\cf7 \cb3 \}\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 \
+Is needed in the android \{\} of app/gradle\
+\
+}
