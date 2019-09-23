@@ -55,7 +55,7 @@ class MySportFragment : Fragment() {
                         //an item click listener is sent to the adapter
                         articleList.adapter = DataListAdapter(it.modelResult) { item: Item -> itemClicked(item) }
                         mySportTextView.text = it.modelResult.topicTitle
-                        Log.i("mko", "Data updated")
+                        Log.i("mko", "Data received")
 
                         root.nextImage.visibility = View.VISIBLE
                         root.progressBar.visibility = View.INVISIBLE
@@ -76,24 +76,20 @@ class MySportFragment : Fragment() {
 
     //function called by the item click listener of the recyclerView
     private fun itemClicked(item : Item) {
-        //log the article title
-        Log.i("mko", "Title: " + item.title)
 
-        //replace fragment with webView fragment
-        if (savedState == null) {
-            val fragment = ArticleFragment.newInstance(item.url)
-            fragmentManager?.beginTransaction()
-                ?.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    fragment.javaClass.simpleName
-                )
-                ?.addToBackStack(fragment.javaClass.simpleName)
-                ?.commit()
+        //replace fragment with article webView fragment
+        val fragment = ArticleFragment.newInstance(item.url)
+        fragmentManager?.beginTransaction()
+            ?.add(
+                R.id.nav_host_fragment,
+                fragment,
+                fragment.javaClass.simpleName
+            )
+            ?.addToBackStack(fragment.javaClass.simpleName)
+            ?.commit()
 
-            //send stat to endpoint
-            Log.i("mko", "Replace with ${fragment.javaClass.simpleName}")
-            context?.let { context -> RequestPostStat(context, PostEvent.DISPLAY).post() }
-        }
+        //send stat to endpoint
+        Log.i("mko", "Replace with ${item.title.take(60)}...")
+        context?.let { context -> RequestPostStat(context, PostEvent.DISPLAY).post() }
     }
 }
