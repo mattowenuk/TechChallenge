@@ -3,6 +3,7 @@ package com.example.techchallenge.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -11,7 +12,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.techchallenge.R
 import com.example.techchallenge.activity.ui.article.ArticleFragment
-import com.example.techchallenge.activity.ui.home.HomeFragment
+import com.example.techchallenge.data.db.Category
+import com.example.techchallenge.data.db.Location
+import com.example.techchallenge.data.db.StatDatabaseProcess
+import com.example.techchallenge.data.db.StatInformation
 import com.example.techchallenge.request.PostEvent
 import com.example.techchallenge.request.RequestPostStat
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,6 +51,8 @@ class NavigationActivity : AppCompatActivity() {
 
         //create a listener for the bottom navigation
         navView.setOnNavigationItemSelectedListener(mOnNavItemClickListener)
+
+        //StatDatabaseProcess().addDummyData()
     }
 
     private val mOnNavItemClickListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
@@ -63,6 +69,14 @@ class NavigationActivity : AppCompatActivity() {
         //send stat to endpoint
         Log.i("mko", "Navigate to ${navController.currentDestination?.label}")
         RequestPostStat(this, PostEvent.DISPLAY).post()
+
+        val sdbp = StatDatabaseProcess()
+        when (menuItem.itemId) {
+            R.id.navigation_home -> sdbp.begin(StatInformation(Location.NAVIGATE_HOME, Category.NAVIGATION))
+            R.id.navigation_my_sport -> sdbp.begin(StatInformation(Location.NAVIGATE_MY_SPORT, Category.NAVIGATION))
+            R.id.navigation_guide -> sdbp.begin(StatInformation(Location.NAVIGATE_GUIDE, Category.NAVIGATION))
+            R.id.navigation_all_sport -> sdbp.begin(StatInformation(Location.NAVIGATE_ALL_SPORT, Category.NAVIGATION))
+        }
 
         return@OnNavigationItemSelectedListener true
     }
@@ -101,5 +115,14 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_menu -> {
+                StatDatabaseProcess().displayStats()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
